@@ -16,29 +16,21 @@
  * limitations under the License.
  */
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.MapReduceBase;
-import org.apache.hadoop.mapred.Mapper;
-import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reducer;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * This is an example Hadoop Map/Reduce application.
@@ -136,13 +128,13 @@ public class WordCount extends Configured implements Tool {
       }
     }
     // Make sure there are exactly 2 parameters left.
-    if (other_args.size() != 2) {
+    if (other_args.size() != 3) {
       System.out.println("ERROR: Wrong number of parameters: " +
-                         other_args.size() + " instead of 2.");
+                         other_args.size() + " instead of 3.");
       return printUsage();
     }
-    FileInputFormat.setInputPaths(conf, other_args.get(0));
-    FileOutputFormat.setOutputPath(conf, new Path(other_args.get(1)));
+    FileInputFormat.setInputPaths(conf, other_args.get(1));
+    FileOutputFormat.setOutputPath(conf, new Path(other_args.get(2)));
 
     JobClient.runJob(conf);
     return 0;
